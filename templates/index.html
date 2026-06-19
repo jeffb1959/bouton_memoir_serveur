@@ -36,9 +36,18 @@
                     <td>{{ button.cycle_days }}</td>
                     <td>{{ button.days_remaining }}</td>
                     <td>{{ "Oui" if button.enabled else "Non" }}</td>
-                    <td>
+                    <td class="actions-cell">
                       <form method="post" action="{{ url_for('confirm_task', module_id=module.id, button_number=button.button) }}">
                         <button type="submit">Confirmer</button>
+                      </form>
+                      <form class="edit-form" method="post" action="{{ url_for('edit_task', module_id=module.id, button_number=button.button) }}">
+                        <input type="text" name="task_name" value="{{ button.task_name }}" />
+                        <input type="number" name="cycle_days" value="{{ button.cycle_days }}" min="1" />
+                        <label class="checkbox-label">
+                          <input type="checkbox" name="enabled" {% if button.enabled %}checked{% endif %} />
+                          Actif
+                        </label>
+                        <button type="submit">Modifier</button>
                       </form>
                     </td>
                   </tr>

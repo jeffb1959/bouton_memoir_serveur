@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, redirect, url_for
+from flask import Flask, jsonify, render_template, redirect, url_for, request
 import json
 from pathlib import Path
 
@@ -66,6 +66,45 @@ def confirm_task(module_id, button_number):
             for idx, button in enumerate(module.get("buttons", []), start=1):
                 if _button_number(button, idx) == button_number:
                     button["days_remaining"] = button.get("cycle_days", 0)
+                    save_data(data)
+                    return redirect(url_for("index"))
+
+            return jsonify({"error": "Bouton introuvable"}), 404
+
+    return jsonify({"error": "Module introuvable"}), 404
+
+
+@app.route("/modules/<module_id>/buttons/<int:button_number>/edit", methods=["POST"])
+def edit_task(module_id, button_number):
+    """Modifie le nom, le cycle et l'état actif d'une tâche."""
+    data = load_data()
+    modules = data if isinstance(data, list) else data.get("modules", [])
+
+    task_name = request.form.get("task_name", "").strip()
+    cycle_days_raw = request.form.get("cycle_days", "").strip()
+    enabled = request.form.get("enabled") == "on"
+
+    if not task_name:
+        return jsonify({"error": "Le nom de la tâche est obligatoire"}), 400
+
+    try:
+        cycle_days = int(cycle_days_raw)
+    except ValueError:
+        return jsonify({"error": "Le délai doit être un nombre entier"}), 400
+
+    if cycle_days <= 0:
+        return jsonify({"error": "Le délai doit être supérieur à zéro"}), 400
+
+    for module in modules:
+        if module.get("id") == module_id:
+            for idx, button in enumerate(module.get("buttons", []), start=1):
+                if _button_number(button, idx) == button_number:
+                    button["task_name"] = task_name
+                    button["cycle_days"] = cycle_days
+                    button["enabled"] = enabled
+                    # Important :
+                    # Ne pas modifier days_remaining ici.
+                    # Changer le délai ne confirme pas la tâche.
                     save_data(data)
                     return redirect(url_for("index"))
 

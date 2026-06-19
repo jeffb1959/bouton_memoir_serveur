@@ -85,3 +85,30 @@ button:hover {
 form {
   margin: 0;
 }
+
+.actions-cell {
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.edit-form input[type="text"],
+.edit-form input[type="number"] {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+}
+
+.checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}

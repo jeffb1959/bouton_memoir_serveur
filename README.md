@@ -52,3 +52,24 @@ Contraintes validées pour cette phase :
 - aucune édition du délai;
 - aucune passerelle ESP-NOW;
 - aucun code Arduino.
+
+## Phase 2.2.0
+
+Cette phase ajoute l'édition depuis l'interface web pour chaque bouton :
+
+- `task_name` (nom de tâche),
+- `cycle_days` (délai/cycle),
+- `enabled` (état actif).
+
+Règle importante :
+
+- changer le délai ne confirme pas la tâche;
+- `days_remaining` n'est pas modifié par l'édition.
+
+Contraintes validées pour cette phase :
+
+- aucune ajout/suppression de module;
+- aucune ajout/suppression de bouton;
+- aucune passerelle ESP-NOW;
+- aucun code Arduino;
+- aucune base de données.

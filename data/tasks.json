@@ -14,18 +14,18 @@
       {
         "id": "bouton 2",
         "task_id": "batteries_auditif",
-        "task_name": "Batteries appareils auditifs",
-        "cycle_days": 30,
-        "days_remaining": 21,
+        "task_name": "filtre du cpap",
+        "cycle_days": 90,
+        "days_remaining": 90,
         "enabled": true
       },
       {
         "id": "bouton 3",
         "task_id": "nettoyage_lunettes",
         "task_name": "Nettoyage lunettes",
-        "cycle_days": 7,
+        "cycle_days": 14,
         "days_remaining": 7,
-        "enabled": true
+        "enabled": false
       }
     ]
   },
