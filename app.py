@@ -47,6 +47,26 @@ def find_button(module, button_number):
     return None
 
 
+def build_device_config_payload(module):
+    """Construit une configuration compacte pour un module EE05."""
+    buttons = []
+
+    for button in module.get("buttons", []):
+        if button.get("enabled", True):
+            buttons.append({
+                "button": button.get("button"),
+                "task_name": button.get("task_name"),
+                "cycle_days": button.get("cycle_days"),
+                "days_remaining": button.get("days_remaining")
+            })
+
+    return {
+        "module_id": module.get("id"),
+        "module_name": module.get("name"),
+        "buttons": buttons
+    }
+
+
 @app.route("/")
 def index():
     modules = load_data()
@@ -83,22 +103,63 @@ def api_module_device_config(module_id):
             "module_id": module_id
         }), 404
 
-    buttons = []
-
-    for button in module.get("buttons", []):
-        if button.get("enabled", True):
-            buttons.append({
-                "button": button.get("button"),
-                "task_name": button.get("task_name"),
-                "cycle_days": button.get("cycle_days"),
-                "days_remaining": button.get("days_remaining")
-            })
+    device_config = build_device_config_payload(module)
 
     return jsonify({
         "status": "ok",
         "module_id": module.get("id"),
         "module_name": module.get("name"),
-        "buttons": buttons
+        "buttons": device_config["buttons"]
+    })
+
+
+@app.route("/api/modules/<module_id>/buttons/<int:button_number>/confirm-sync", methods=["POST"])
+def api_confirm_task_sync(module_id, button_number):
+    """Confirme une tache et retourne une synchronisation compacte pour le module EE05."""
+    data = load_data()
+
+    module = find_module(data, module_id)
+    if module is None:
+        return jsonify({
+            "status": "error",
+            "error": "Module introuvable",
+            "module_id": module_id
+        }), 404
+
+    button = find_button(module, button_number)
+    if button is None:
+        return jsonify({
+            "status": "error",
+            "error": "Bouton introuvable",
+            "module_id": module_id,
+            "button": button_number
+        }), 404
+
+    if not button.get("enabled", True):
+        return jsonify({
+            "status": "error",
+            "error": "Bouton desactive",
+            "module_id": module_id,
+            "button": button_number
+        }), 400
+
+    button["days_remaining"] = button.get("cycle_days", 0)
+    save_data(data)
+
+    device_config = build_device_config_payload(module)
+
+    return jsonify({
+        "status": "ok",
+        "event": "confirm",
+        "module_id": module.get("id"),
+        "module_name": module.get("name"),
+        "confirmed_button": {
+            "button": button.get("button"),
+            "task_name": button.get("task_name"),
+            "cycle_days": button.get("cycle_days"),
+            "days_remaining": button.get("days_remaining")
+        },
+        "buttons": device_config["buttons"]
     })
 
 

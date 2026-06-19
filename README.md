@@ -118,3 +118,22 @@ Contraintes valides pour cette phase :
 - En cas de module introuvable, retourne `{"status":"error","error":"Module introuvable","module_id":"<module_id>"}` avec HTTP 404.
 - Aucune communication ESP-NOW pour l'instant.
 - Aucun code Arduino pour l'instant.
+
+## Phase 2.5.0
+
+- Ajout de la route `POST /api/modules/<module_id>/buttons/<button_number>/confirm-sync`.
+- La route confirme la tache (avec `days_remaining = cycle_days`), puis sauvegarde `data/tasks.json`.
+- Réponse JSON compacte de succès :
+  - `status = ok`
+  - `event = confirm`
+  - `module_id`
+  - `module_name`
+  - `confirmed_button` (avec `button`, `task_name`, `cycle_days`, `days_remaining`)
+  - `buttons` (configuration compacte des boutons actifs).
+- Gestion des erreurs JSON :
+  - module introuvable
+  - bouton introuvable
+  - bouton desactive.
+- Cette route est prévue pour la future passerelle ESP32-S3-Touch-LCD-5.
+- Aucune communication ESP-NOW pour l'instant.
+- Aucun code Arduino pour l'instant.
