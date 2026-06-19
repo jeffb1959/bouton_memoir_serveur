@@ -34,7 +34,7 @@
         "button": 1,
         "task_name": "Sel adoucisseur",
         "cycle_days": 30,
-        "days_remaining": 5,
+        "days_remaining": 30,
         "enabled": true
       },
       {

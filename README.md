@@ -148,3 +148,17 @@ Contraintes valides pour cette phase :
 - Gestion d'erreur module introuvable avec code HTTP 404.
 - Aucune communication ESP-NOW pour l'instant.
 - Aucun code Arduino pour l'instant.
+
+## Phase 2.7.0
+
+- Ajout d'un journal de confirmations dans `data/confirmations_log.json`.
+- Journalisation des confirmations pour :
+  - source `web` (interface web),
+  - source `api` (POST /api/modules/<module_id>/buttons/<button_number>/confirm),
+  - source `api_confirm_sync` (POST /api/modules/<module_id>/buttons/<button_number>/confirm-sync).
+- Chaque entrée de journal contient :
+  - `timestamp`, `source`, `module_id`, `module_name`, `button`, `task_name`, `cycle_days`, `days_remaining`.
+- Ajout de la route `GET /api/confirmations-log` pour lire le journal.
+- Aucune interface web du journal pour l’instant.
+- Aucune base de données.
+- Aucune communication ESP-NOW.

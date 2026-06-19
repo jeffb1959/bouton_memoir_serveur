@@ -1,0 +1,34 @@
+{
+  "confirmations": [
+    {
+      "timestamp": "2026-06-19T17:31:23",
+      "source": "web",
+      "module_id": "salle_mecanique",
+      "module_name": "Salle mécanique",
+      "button": 1,
+      "task_name": "Sel adoucisseur",
+      "cycle_days": 30,
+      "days_remaining": 30
+    },
+    {
+      "timestamp": "2026-06-19T17:32:52",
+      "source": "api",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 14,
+      "days_remaining": 14
+    },
+    {
+      "timestamp": "2026-06-19T17:33:15",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 14,
+      "days_remaining": 14
+    }
+  ]
+}

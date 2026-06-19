@@ -6,7 +6,9 @@ from pathlib import Path
 app = Flask(__name__)
 
 
-DATA_FILE = Path(__file__).parent / "data" / "tasks.json"
+BASE_DIR = Path(__file__).parent
+DATA_FILE = BASE_DIR / "data" / "tasks.json"
+LOG_FILE = BASE_DIR / "data" / "confirmations_log.json"
 
 
 def load_data():
@@ -20,9 +22,19 @@ def save_data(data):
         json.dump(data, file, ensure_ascii=False, indent=2)
 
 
-def get_server_time_iso():
-    """Retourne l'heure serveur au format ISO simple."""
-    return datetime.now().isoformat(timespec="seconds")
+def load_confirmation_log():
+    """Charge le journal des confirmations."""
+    if not LOG_FILE.exists():
+        return {"confirmations": []}
+
+    with LOG_FILE.open("r", encoding="utf-8") as file:
+        return json.load(file)
+
+
+def save_confirmation_log(log_data):
+    """Sauvegarde le journal des confirmations."""
+    with LOG_FILE.open("w", encoding="utf-8") as file:
+        json.dump(log_data, file, ensure_ascii=False, indent=2)
 
 
 def _button_number(button, fallback):
@@ -34,6 +46,11 @@ def _button_number(button, fallback):
         return int(button_value)
     except (TypeError, ValueError):
         return fallback
+
+
+def get_server_time_iso():
+    """Retourne l'heure serveur au format ISO simple."""
+    return datetime.now().isoformat(timespec="seconds")
 
 
 def find_module(data, module_id):
@@ -71,6 +88,25 @@ def build_device_config_payload(module):
         "module_name": module.get("name"),
         "buttons": buttons
     }
+
+
+def add_confirmation_log_entry(source, module, button):
+    """Ajoute une entree au journal des confirmations."""
+    log_data = load_confirmation_log()
+
+    entry = {
+        "timestamp": get_server_time_iso(),
+        "source": source,
+        "module_id": module.get("id"),
+        "module_name": module.get("name"),
+        "button": button.get("button"),
+        "task_name": button.get("task_name"),
+        "cycle_days": button.get("cycle_days"),
+        "days_remaining": button.get("days_remaining")
+    }
+
+    log_data.setdefault("confirmations", []).append(entry)
+    save_confirmation_log(log_data)
 
 
 @app.route("/")
@@ -178,6 +214,7 @@ def api_confirm_task_sync(module_id, button_number):
 
     button["days_remaining"] = button.get("cycle_days", 0)
     save_data(data)
+    add_confirmation_log_entry("api_confirm_sync", module, button)
 
     device_config = build_device_config_payload(module)
 
@@ -211,6 +248,7 @@ def confirm_task(module_id, button_number):
 
     button["days_remaining"] = button.get("cycle_days", 0)
     save_data(data)
+    add_confirmation_log_entry("web", module, button)
     return redirect(url_for("index"))
 
 
@@ -237,6 +275,7 @@ def api_confirm_task(module_id, button_number):
 
     button["days_remaining"] = button.get("cycle_days", 0)
     save_data(data)
+    add_confirmation_log_entry("api", module, button)
 
     return jsonify({
         "status": "ok",
@@ -287,6 +326,12 @@ def edit_task(module_id, button_number):
             return jsonify({"error": "Bouton introuvable"}), 404
 
     return jsonify({"error": "Module introuvable"}), 404
+
+
+@app.route("/api/confirmations-log")
+def api_confirmations_log():
+    """Retourne le journal des confirmations."""
+    return jsonify(load_confirmation_log())
 
 
 if __name__ == "__main__":
