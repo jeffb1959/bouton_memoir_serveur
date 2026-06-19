@@ -70,6 +70,38 @@ def get_module(module_id):
     return jsonify({"error": "Module introuvable"}), 404
 
 
+@app.route("/api/modules/<module_id>/device-config")
+def api_module_device_config(module_id):
+    """Retourne une configuration simplifiee pour un module EE05."""
+    data = load_data()
+
+    module = find_module(data, module_id)
+    if module is None:
+        return jsonify({
+            "status": "error",
+            "error": "Module introuvable",
+            "module_id": module_id
+        }), 404
+
+    buttons = []
+
+    for button in module.get("buttons", []):
+        if button.get("enabled", True):
+            buttons.append({
+                "button": button.get("button"),
+                "task_name": button.get("task_name"),
+                "cycle_days": button.get("cycle_days"),
+                "days_remaining": button.get("days_remaining")
+            })
+
+    return jsonify({
+        "status": "ok",
+        "module_id": module.get("id"),
+        "module_name": module.get("name"),
+        "buttons": buttons
+    })
+
+
 @app.route("/modules/<module_id>/buttons/<int:button_number>/confirm", methods=["POST"])
 def confirm_task(module_id, button_number):
     """Confirme une tache depuis l'interface web."""

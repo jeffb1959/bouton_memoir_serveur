@@ -103,3 +103,18 @@ Contraintes valides pour cette phase :
 - Aucune communication ESP-NOW.
 - Aucun code Arduino.
 - Aucune base de donnees.
+
+## Phase 2.4.0
+
+- Ajout de la route `GET /api/modules/<module_id>/device-config`.
+- Route prévue pour la passerelle/ module EE05.
+- Retourne un JSON compact avec `status`, `module_id`, `module_name`, `buttons`.
+- `buttons` contient uniquement les boutons actifs (`enabled = true`).
+- Chaque bouton retourné expose :
+  - `button`
+  - `task_name`
+  - `cycle_days`
+  - `days_remaining`
+- En cas de module introuvable, retourne `{"status":"error","error":"Module introuvable","module_id":"<module_id>"}` avec HTTP 404.
+- Aucune communication ESP-NOW pour l'instant.
+- Aucun code Arduino pour l'instant.
