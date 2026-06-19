@@ -1,0 +1,62 @@
+[
+  {
+    "id": "salle_bain",
+    "name": "Salle de bain",
+    "buttons": [
+      {
+        "id": "button 1",
+        "task_id": "verres_contact",
+        "task_name": "Verres de contact",
+        "cycle_days": 14,
+        "days_remaining": 8,
+        "enabled": true
+      },
+      {
+        "id": "button 2",
+        "task_id": "batteries_auditif",
+        "task_name": "Batteries appareils auditifs",
+        "cycle_days": 30,
+        "days_remaining": 21,
+        "enabled": true
+      },
+      {
+        "id": "button 3",
+        "task_id": "nettoyage_lunettes",
+        "task_name": "Nettoyage lunettes",
+        "cycle_days": 7,
+        "days_remaining": 2,
+        "enabled": true
+      }
+    ]
+  },
+  {
+    "id": "salle_mecanique",
+    "name": "Salle mécanique",
+    "buttons": [
+      {
+        "id": "button 1",
+        "task_id": "sel_adoucisseur",
+        "task_name": "Sel adoucisseur",
+        "cycle_days": 30,
+        "days_remaining": 5,
+        "enabled": true
+      },
+      {
+        "id": "button 2",
+        "task_id": "filtre_fournaise",
+        "task_name": "Filtre fournaise",
+        "cycle_days": 90,
+        "days_remaining": 44,
+        "enabled": true
+      },
+      {
+        "id": "button 3",
+        "task_id": "pompe_puisard",
+        "task_name": "Test pompe puisard",
+        "cycle_days": 60,
+        "days_remaining": 18,
+        "enabled": true
+      }
+    ]
+  }
+]

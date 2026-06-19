@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boutons Mémoire</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <main class="container">
+    <h1>Boutons Mémoire</h1>
+    <p class="subtitle">Serveur Flask local - Phase 2.0.0</p>
+
+    {% if modules %}
+      {% for module in modules %}
+        <section class="module-card">
+          <h2>{{ module.name }}</h2>
+          <p class="module-id">ID : {{ module.id }}</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Bouton</th>
+                  <th>Tâche</th>
+                  <th>Cycle</th>
+                  <th>Jours restants</th>
+                  <th>Actif</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for button in module.buttons %}
+                  <tr>
+                    <td>{{ button.id }}</td>
+                    <td>{{ button.task_name }}</td>
+                    <td>{{ button.cycle_days }}</td>
+                    <td>{{ button.days_remaining }}</td>
+                    <td>{{ "Oui" if button.enabled else "Non" }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      {% endfor %}
+    {% else %}
+      <p>Aucun module disponible.</p>
+    {% endif %}
+  </main>
+</body>
+</html>
