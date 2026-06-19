@@ -73,3 +73,16 @@ Contraintes validées pour cette phase :
 - aucune passerelle ESP-NOW;
 - aucun code Arduino;
 - aucune base de données.
+
+## Phase 2.2.1
+
+- Nettoyage du modèle JSON : suppression des champs `task_id` et `id` sur chaque bouton.
+- Conservation de la structure cible par bouton :
+  - `button`
+  - `task_name`
+  - `cycle_days`
+  - `days_remaining`
+  - `enabled`
+- Le vrai identifiant technique d’un bouton reste `module_id + button`.
+- La logique de confirmation reste inchangée.
+- La logique d’édition reste inchangée.

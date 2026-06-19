@@ -20,14 +20,14 @@ def save_data(data):
 
 
 def _button_number(button, fallback):
-    if button.get("button") is not None:
-        return button.get("button")
+    button_value = button.get("button")
+    if button_value is None:
+        return fallback
 
-    button_id = button.get("id")
-    if isinstance(button_id, str):
-        digits = "".join(char for char in button_id if char.isdigit())
-        if digits:
-            return int(digits)
+    try:
+        return int(button_value)
+    except (TypeError, ValueError):
+        return fallback
 
     return fallback
 
