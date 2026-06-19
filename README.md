@@ -162,3 +162,13 @@ Contraintes valides pour cette phase :
 - Aucune interface web du journal pour l’instant.
 - Aucune base de données.
 - Aucune communication ESP-NOW.
+
+## Phase 2.8.0
+
+- Affichage du journal dans la page principale.
+- Les 20 confirmations les plus récentes sont affichées, du plus récent au plus ancien.
+- Aucune suppression du journal.
+- Aucun filtre ajouté.
+- Aucun export CSV.
+- Aucune pagination.
+- Aucune communication ESP-NOW pour l'instant.

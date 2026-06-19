@@ -62,6 +62,10 @@ td {
   padding: 10px;
 }
 
+.module-card table td {
+  vertical-align: middle;
+}
+
 thead th {
   background: #f5f7fa;
 }
@@ -111,4 +115,13 @@ form {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+}
+
+.source-pill {
+  display: inline-block;
+  padding: 4px 8px;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+  background: #fafafa;
+  font-size: 0.9em;
 }

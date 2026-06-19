@@ -29,6 +29,36 @@
       "task_name": "Verres de contact",
       "cycle_days": 14,
       "days_remaining": 14
+    },
+    {
+      "timestamp": "2026-06-19T17:37:48",
+      "source": "web",
+      "module_id": "salle_mecanique",
+      "module_name": "Salle mécanique",
+      "button": 3,
+      "task_name": "Test pompe puisard",
+      "cycle_days": 60,
+      "days_remaining": 60
+    },
+    {
+      "timestamp": "2026-06-19T17:38:28",
+      "source": "api",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 14,
+      "days_remaining": 14
+    },
+    {
+      "timestamp": "2026-06-19T17:39:01",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 14,
+      "days_remaining": 14
     }
   ]
 }

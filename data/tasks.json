@@ -48,7 +48,7 @@
         "button": 3,
         "task_name": "Test pompe puisard",
         "cycle_days": 60,
-        "days_remaining": 18,
+        "days_remaining": 60,
         "enabled": true
       }
     ]

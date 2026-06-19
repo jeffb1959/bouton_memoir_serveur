@@ -60,6 +60,39 @@
     {% else %}
       <p>Aucun module disponible.</p>
     {% endif %}
+
+    <section class="module-card">
+      <h2>Journal des confirmations</h2>
+
+      {% if recent_confirmations %}
+        <table>
+          <thead>
+            <tr>
+              <th>Date / heure</th>
+              <th>Source</th>
+              <th>Module</th>
+              <th>Bouton</th>
+              <th>TÃ¢che</th>
+              <th>Jours restants</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for entry in recent_confirmations %}
+              <tr>
+                <td>{{ entry.timestamp }}</td>
+                <td><span class="source-pill">{{ entry.source }}</span></td>
+                <td>{{ entry.module_name }}</td>
+                <td>BTN{{ entry.button }}</td>
+                <td>{{ entry.task_name }}</td>
+                <td>{{ entry.days_remaining }} jours</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p>Aucune confirmation enregistrée pour l'instant.</p>
+      {% endif %}
+    </section>
   </main>
 </body>
 </html>

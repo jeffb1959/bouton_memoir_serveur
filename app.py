@@ -111,11 +111,22 @@ def add_confirmation_log_entry(source, module, button):
 
 @app.route("/")
 def index():
-    modules = load_data()
+    data = load_data()
+    modules = data.get("modules", []) if isinstance(data, dict) else data
+
     for module in modules:
         for index, button in enumerate(module.get("buttons", []), start=1):
             button["button"] = _button_number(button, index)
-    return render_template("index.html", modules=modules)
+
+    log_data = load_confirmation_log()
+    confirmations = log_data.get("confirmations", [])
+    recent_confirmations = list(reversed(confirmations))[:20]
+
+    return render_template(
+        "index.html",
+        modules=modules,
+        recent_confirmations=recent_confirmations
+    )
 
 
 @app.route("/api/modules")
