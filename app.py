@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, render_template, redirect, url_for, request
 import json
+from datetime import datetime
 from pathlib import Path
 
 app = Flask(__name__)
@@ -17,6 +18,11 @@ def save_data(data):
     """Sauvegarde les donnees dans le fichier JSON."""
     with DATA_FILE.open("w", encoding="utf-8") as file:
         json.dump(data, file, ensure_ascii=False, indent=2)
+
+
+def get_server_time_iso():
+    """Retourne l'heure serveur au format ISO simple."""
+    return datetime.now().isoformat(timespec="seconds")
 
 
 def _button_number(button, fallback):
@@ -110,6 +116,33 @@ def api_module_device_config(module_id):
         "module_id": module.get("id"),
         "module_name": module.get("name"),
         "buttons": device_config["buttons"]
+    })
+
+
+@app.route("/api/modules/<module_id>/sync")
+def api_module_sync(module_id):
+    """Retourne l'etat officiel compact d'un module pour synchronisation."""
+    data = load_data()
+
+    module = find_module(data, module_id)
+    if module is None:
+        return jsonify({
+            "status": "error",
+            "event": "sync",
+            "error": "Module introuvable",
+            "module_id": module_id,
+            "server_time": get_server_time_iso()
+        }), 404
+
+    payload = build_device_config_payload(module)
+
+    return jsonify({
+        "status": "ok",
+        "event": "sync",
+        "module_id": payload["module_id"],
+        "module_name": payload["module_name"],
+        "server_time": get_server_time_iso(),
+        "buttons": payload["buttons"]
     })
 
 

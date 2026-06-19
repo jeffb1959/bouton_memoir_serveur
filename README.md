@@ -137,3 +137,14 @@ Contraintes valides pour cette phase :
 - Cette route est prévue pour la future passerelle ESP32-S3-Touch-LCD-5.
 - Aucune communication ESP-NOW pour l'instant.
 - Aucun code Arduino pour l'instant.
+
+## Phase 2.6.0
+
+- Ajout de la route `GET /api/modules/<module_id>/sync`.
+- Route prévue pour la synchronisation globale d'un module EE05.
+- Retour JSON avec `event = sync`.
+- Retourne `server_time`.
+- Retourne uniquement les boutons actifs au format compact (`button`, `task_name`, `cycle_days`, `days_remaining`).
+- Gestion d'erreur module introuvable avec code HTTP 404.
+- Aucune communication ESP-NOW pour l'instant.
+- Aucun code Arduino pour l'instant.
