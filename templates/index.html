@@ -25,16 +25,22 @@
                   <th>Cycle</th>
                   <th>Jours restants</th>
                   <th>Actif</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 {% for button in module.buttons %}
                   <tr>
-                    <td>{{ button.id }}</td>
+                    <td>BTN{{ button.button }}</td>
                     <td>{{ button.task_name }}</td>
                     <td>{{ button.cycle_days }}</td>
                     <td>{{ button.days_remaining }}</td>
                     <td>{{ "Oui" if button.enabled else "Non" }}</td>
+                    <td>
+                      <form method="post" action="{{ url_for('confirm_task', module_id=module.id, button_number=button.button) }}">
+                        <button type="submit">Confirmer</button>
+                      </form>
+                    </td>
                   </tr>
                 {% endfor %}
               </tbody>

@@ -35,3 +35,20 @@ python app.py
 - http://127.0.0.1:5000
 - http://127.0.0.1:5000/api/modules
 - http://127.0.0.1:5000/api/modules/salle_bain
+
+## Phase 2.1.0
+
+Cette phase ajoute un bouton **Confirmer** pour chaque tâche dans la page principale.
+
+Quand un utilisateur clique sur **Confirmer** :
+
+- la valeur `days_remaining` est remise à `cycle_days` pour la tâche concernée;
+- la modification est sauvegardée dans `data/tasks.json`;
+- la page redirige vers l’affichage principal afin de montrer la nouvelle valeur.
+
+Contraintes validées pour cette phase :
+
+- aucune édition du nom;
+- aucune édition du délai;
+- aucune passerelle ESP-NOW;
+- aucun code Arduino.

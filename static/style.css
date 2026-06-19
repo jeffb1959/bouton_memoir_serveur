@@ -69,3 +69,19 @@ thead th {
 tbody tr:nth-child(odd) {
   background: #fafbfd;
 }
+
+button {
+  padding: 8px 12px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #f0f0f0;
+}
+
+form {
+  margin: 0;
+}
