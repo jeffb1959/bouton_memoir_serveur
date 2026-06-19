@@ -14,7 +14,7 @@ def load_data():
 
 
 def save_data(data):
-    """Sauvegarde les données dans le fichier JSON."""
+    """Sauvegarde les donnees dans le fichier JSON."""
     with DATA_FILE.open("w", encoding="utf-8") as file:
         json.dump(data, file, ensure_ascii=False, indent=2)
 
@@ -29,7 +29,22 @@ def _button_number(button, fallback):
     except (TypeError, ValueError):
         return fallback
 
-    return fallback
+
+def find_module(data, module_id):
+    """Trouve un module par son identifiant."""
+    modules = data.get("modules", []) if isinstance(data, dict) else data
+    for module in modules:
+        if module.get("id") == module_id:
+            return module
+    return None
+
+
+def find_button(module, button_number):
+    """Trouve un bouton dans un module."""
+    for button in module.get("buttons", []):
+        if button.get("button") == button_number:
+            return button
+    return None
 
 
 @app.route("/")
@@ -57,26 +72,61 @@ def get_module(module_id):
 
 @app.route("/modules/<module_id>/buttons/<int:button_number>/confirm", methods=["POST"])
 def confirm_task(module_id, button_number):
-    """Confirme une tâche depuis l'interface web."""
+    """Confirme une tache depuis l'interface web."""
     data = load_data()
-    modules = data if isinstance(data, list) else data.get("modules", [])
 
-    for module in modules:
-        if module.get("id") == module_id:
-            for idx, button in enumerate(module.get("buttons", []), start=1):
-                if _button_number(button, idx) == button_number:
-                    button["days_remaining"] = button.get("cycle_days", 0)
-                    save_data(data)
-                    return redirect(url_for("index"))
+    module = find_module(data, module_id)
+    if module is None:
+        return jsonify({"error": "Module introuvable"}), 404
 
-            return jsonify({"error": "Bouton introuvable"}), 404
+    button = find_button(module, button_number)
+    if button is None:
+        return jsonify({"error": "Bouton introuvable"}), 404
 
-    return jsonify({"error": "Module introuvable"}), 404
+    button["days_remaining"] = button.get("cycle_days", 0)
+    save_data(data)
+    return redirect(url_for("index"))
+
+
+@app.route("/api/modules/<module_id>/buttons/<int:button_number>/confirm", methods=["POST"])
+def api_confirm_task(module_id, button_number):
+    """Confirme une tache depuis une API JSON pour la future passerelle."""
+    data = load_data()
+
+    module = find_module(data, module_id)
+    if module is None:
+        return jsonify({"status": "error", "error": "Module introuvable"}), 404
+
+    button = find_button(module, button_number)
+    if button is None:
+        return jsonify({"status": "error", "error": "Bouton introuvable"}), 404
+
+    if not button.get("enabled", True):
+        return jsonify({
+            "status": "error",
+            "error": "Bouton desactive",
+            "module_id": module_id,
+            "button": button_number
+        }), 400
+
+    button["days_remaining"] = button.get("cycle_days", 0)
+    save_data(data)
+
+    return jsonify({
+        "status": "ok",
+        "module_id": module_id,
+        "module_name": module.get("name"),
+        "button": button.get("button"),
+        "task_name": button.get("task_name"),
+        "cycle_days": button.get("cycle_days"),
+        "days_remaining": button.get("days_remaining"),
+        "enabled": button.get("enabled", True)
+    })
 
 
 @app.route("/modules/<module_id>/buttons/<int:button_number>/edit", methods=["POST"])
 def edit_task(module_id, button_number):
-    """Modifie le nom, le cycle et l'état actif d'une tâche."""
+    """Modifie le nom, le cycle et l'etat actif d'une tache."""
     data = load_data()
     modules = data if isinstance(data, list) else data.get("modules", [])
 
@@ -85,15 +135,15 @@ def edit_task(module_id, button_number):
     enabled = request.form.get("enabled") == "on"
 
     if not task_name:
-        return jsonify({"error": "Le nom de la tâche est obligatoire"}), 400
+        return jsonify({"error": "Le nom de la tache est obligatoire"}), 400
 
     try:
         cycle_days = int(cycle_days_raw)
     except ValueError:
-        return jsonify({"error": "Le délai doit être un nombre entier"}), 400
+        return jsonify({"error": "Le delai doit etre un nombre entier"}), 400
 
     if cycle_days <= 0:
-        return jsonify({"error": "Le délai doit être supérieur à zéro"}), 400
+        return jsonify({"error": "Le delai doit etre superieur a zero"}), 400
 
     for module in modules:
         if module.get("id") == module_id:
@@ -104,7 +154,7 @@ def edit_task(module_id, button_number):
                     button["enabled"] = enabled
                     # Important :
                     # Ne pas modifier days_remaining ici.
-                    # Changer le délai ne confirme pas la tâche.
+                    # Changer le delai ne confirme pas la tache.
                     save_data(data)
                     return redirect(url_for("index"))
 

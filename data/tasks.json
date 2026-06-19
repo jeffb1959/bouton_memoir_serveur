@@ -21,7 +21,7 @@
         "button": 3,
         "task_name": "Changer monture des lunettes",
         "cycle_days": 21,
-        "days_remaining": 10,
+        "days_remaining": 21,
         "enabled": true
       }
     ]

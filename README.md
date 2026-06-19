@@ -1,10 +1,10 @@
-# Phase 2.0.0 — Boutons Mémoire Serveur
+# Phase 2.0.0 - Boutons Memoire Serveur
 
 ## Objectif
 
-Cette phase met en place un serveur Flask minimal pour lire une configuration de modules et de boutons depuis un fichier JSON local (`data/tasks.json`) et l’afficher dans une page web simple.
+Cette phase met en place un serveur Flask minimal pour lire une configuration de modules et de boutons depuis un fichier JSON local (`data/tasks.json`) et l'afficher dans une page web simple.
 
-## 1) Créer l’environnement virtuel
+## 1) Creer l'environnement virtuel
 
 Ouvrez un terminal PowerShell dans le dossier du projet puis lancez :
 
@@ -12,13 +12,13 @@ Ouvrez un terminal PowerShell dans le dossier du projet puis lancez :
 python -m venv .venv
 ```
 
-## 2) Activer l’environnement (Windows PowerShell)
+## 2) Activer l'environnement (Windows PowerShell)
 
 ```powershell
 . .venv\Scripts\Activate.ps1
 ```
 
-## 3) Installer les dépendances
+## 3) Installer les dependances
 
 ```powershell
 pip install -r requirements.txt
@@ -38,51 +38,68 @@ python app.py
 
 ## Phase 2.1.0
 
-Cette phase ajoute un bouton **Confirmer** pour chaque tâche dans la page principale.
+Cette phase ajoute un bouton de confirmation pour chaque tache dans la page principale.
 
-Quand un utilisateur clique sur **Confirmer** :
+Quand un utilisateur clique sur Confirmer:
 
-- la valeur `days_remaining` est remise à `cycle_days` pour la tâche concernée;
-- la modification est sauvegardée dans `data/tasks.json`;
-- la page redirige vers l’affichage principal afin de montrer la nouvelle valeur.
+- la valeur `days_remaining` est remise a `cycle_days` pour la tache concerne;
+- la modification est sauvegardee dans `data/tasks.json`;
+- la page redirige vers l'affichage principal afin de montrer la nouvelle valeur.
 
-Contraintes validées pour cette phase :
+Contraintes valides pour cette phase :
 
-- aucune édition du nom;
-- aucune édition du délai;
+- aucune edition du nom;
+- aucune edition du delai;
 - aucune passerelle ESP-NOW;
 - aucun code Arduino.
 
 ## Phase 2.2.0
 
-Cette phase ajoute l'édition depuis l'interface web pour chaque bouton :
+Cette phase ajoute l'edition depuis l'interface web pour chaque bouton :
 
-- `task_name` (nom de tâche),
-- `cycle_days` (délai/cycle),
-- `enabled` (état actif).
+- `task_name` (nom de tache),
+- `cycle_days` (delai/cycle),
+- `enabled` (etat actif).
 
-Règle importante :
+Regle importante :
 
-- changer le délai ne confirme pas la tâche;
-- `days_remaining` n'est pas modifié par l'édition.
+- changer le delai ne confirme pas la tache;
+- `days_remaining` n'est pas modifie par l'edition.
 
-Contraintes validées pour cette phase :
+Contraintes valides pour cette phase :
 
 - aucune ajout/suppression de module;
 - aucune ajout/suppression de bouton;
 - aucune passerelle ESP-NOW;
 - aucun code Arduino;
-- aucune base de données.
+- aucune base de donnees.
 
 ## Phase 2.2.1
 
-- Nettoyage du modèle JSON : suppression des champs `task_id` et `id` sur chaque bouton.
+- Nettoyage du modele JSON : suppression des champs `task_id` et `id` sur chaque bouton.
 - Conservation de la structure cible par bouton :
   - `button`
   - `task_name`
   - `cycle_days`
   - `days_remaining`
   - `enabled`
-- Le vrai identifiant technique d’un bouton reste `module_id + button`.
+- Le vrai identifiant technique d'un bouton reste `module_id + button`.
 - La logique de confirmation reste inchangée.
-- La logique d’édition reste inchangée.
+- La logique d'edition reste inchangée.
+
+## Phase 2.3.0
+
+- Ajout d'une route API de confirmation pour la future passerelle:
+  - POST /api/modules/<module_id>/buttons/<button_number>/confirm
+- La confirmation API met a jour `days_remaining = cycle_days`.
+- La confirmation API sauvegarde `data/tasks.json`.
+- Reponse JSON en cas de succes:
+  - `status` = `ok`
+  - `module_id`, `module_name`, `button`, `task_name`, `cycle_days`, `days_remaining`, `enabled`
+- Reponses JSON d'erreur:
+  - `status` = `error` + `error` si module introuvable,
+  - `status` = `error` + `error` si bouton introuvable,
+  - `status` = `error` + `error` si bouton desactive.
+- Aucune communication ESP-NOW.
+- Aucun code Arduino.
+- Aucune base de donnees.
