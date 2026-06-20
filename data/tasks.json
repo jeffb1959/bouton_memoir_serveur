@@ -14,7 +14,7 @@
         "button": 2,
         "task_name": "filtre du cpap",
         "cycle_days": 90,
-        "days_remaining": 90,
+        "days_remaining": 45,
         "enabled": false
       },
       {

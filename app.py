@@ -11,6 +11,14 @@ DATA_FILE = BASE_DIR / "data" / "tasks.json"
 LOG_FILE = BASE_DIR / "data" / "confirmations_log.json"
 
 
+@app.post("/button-event")
+def button_event():
+    """Reçoit un événement JSON envoyé par la passerelle ESP32."""
+    payload = request.get_json(silent=True)
+    print(payload)
+    return jsonify({"ok": True}), 200
+
+
 def load_data():
     with DATA_FILE.open("r", encoding="utf-8") as file:
         return json.load(file)
