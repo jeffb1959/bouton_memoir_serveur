@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, render_template, redirect, url_for, request
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 
 app = Flask(__name__)
@@ -21,7 +21,12 @@ def button_event():
 
 def load_data():
     with DATA_FILE.open("r", encoding="utf-8") as file:
-        return json.load(file)
+        data = json.load(file)
+
+    if ensure_last_confirmed_at(data):
+        save_data(data)
+
+    return data
 
 
 def save_data(data):
@@ -43,6 +48,92 @@ def save_confirmation_log(log_data):
     """Sauvegarde le journal des confirmations."""
     with LOG_FILE.open("w", encoding="utf-8") as file:
         json.dump(log_data, file, ensure_ascii=False, indent=2)
+
+
+def get_today():
+    """Retourne la date du jour."""
+    return datetime.now().date()
+
+
+def parse_confirmed_date(value):
+    """Parse une date ISO YYYY-MM-DD ou retourne None."""
+    if not isinstance(value, str):
+        return None
+
+    try:
+        return datetime.strptime(value, "%Y-%m-%d").date()
+    except ValueError:
+        return None
+
+
+def calculate_days_remaining(button, today=None):
+    """Calcule le nombre de jours restants."""
+    if today is None:
+        today = get_today()
+
+    cycle_days = button.get("cycle_days")
+    try:
+        cycle_days = int(cycle_days)
+    except (TypeError, ValueError):
+        cycle_days = 0
+
+    confirmed_at = parse_confirmed_date(button.get("last_confirmed_at"))
+    if confirmed_at is None:
+        return cycle_days
+
+    elapsed_days = (today - confirmed_at).days
+    return cycle_days - elapsed_days
+
+
+def ensure_last_confirmed_at(data):
+    """Ajoute/migre last_confirmed_at depuis days_remaining si nécessaire."""
+    modules = data.get("modules", []) if isinstance(data, dict) else data
+    changed = False
+    today = get_today()
+
+    for module in modules:
+        buttons = module.get("buttons", [])
+        for button in buttons:
+            if not isinstance(button, dict):
+                continue
+
+            cycle_days = button.get("cycle_days")
+            try:
+                cycle_days = int(cycle_days)
+            except (TypeError, ValueError):
+                cycle_days = 0
+
+            if "last_confirmed_at" not in button:
+                days_remaining = button.get("days_remaining", cycle_days)
+                try:
+                    days_remaining = int(days_remaining)
+                except (TypeError, ValueError):
+                    days_remaining = cycle_days
+
+                days_elapsed = cycle_days - days_remaining
+                button["last_confirmed_at"] = (today - timedelta(days=days_elapsed)).isoformat()
+                changed = True
+            elif parse_confirmed_date(button.get("last_confirmed_at")) is None:
+                button["last_confirmed_at"] = today.isoformat()
+                changed = True
+
+    return changed
+
+
+def prepare_response_data(data):
+    """Prépare modules pour l'API avec days_remaining calculé."""
+    modules = data.get("modules", []) if isinstance(data, dict) else data
+    today = get_today()
+
+    for module in modules:
+        for idx, button in enumerate(module.get("buttons", []), start=1):
+            if not isinstance(button, dict):
+                continue
+
+            button["button"] = _button_number(button, idx)
+            button["days_remaining"] = calculate_days_remaining(button, today=today)
+
+    return data
 
 
 def _button_number(button, fallback):
@@ -84,11 +175,13 @@ def build_device_config_payload(module):
 
     for button in module.get("buttons", []):
         if button.get("enabled", True):
+            days_remaining = calculate_days_remaining(button)
             buttons.append({
                 "button": button.get("button"),
                 "task_name": button.get("task_name"),
                 "cycle_days": button.get("cycle_days"),
-                "days_remaining": button.get("days_remaining")
+                "days_remaining": days_remaining,
+                "last_confirmed_at": button.get("last_confirmed_at")
             })
 
     return {
@@ -110,7 +203,8 @@ def add_confirmation_log_entry(source, module, button):
         "button": button.get("button"),
         "task_name": button.get("task_name"),
         "cycle_days": button.get("cycle_days"),
-        "days_remaining": button.get("days_remaining")
+        "days_remaining": calculate_days_remaining(button),
+        "last_confirmed_at": button.get("last_confirmed_at")
     }
 
     log_data.setdefault("confirmations", []).append(entry)
@@ -119,12 +213,8 @@ def add_confirmation_log_entry(source, module, button):
 
 @app.route("/")
 def index():
-    data = load_data()
+    data = prepare_response_data(load_data())
     modules = data.get("modules", []) if isinstance(data, dict) else data
-
-    for module in modules:
-        for index, button in enumerate(module.get("buttons", []), start=1):
-            button["button"] = _button_number(button, index)
 
     log_data = load_confirmation_log()
     confirmations = log_data.get("confirmations", [])
@@ -139,13 +229,13 @@ def index():
 
 @app.route("/api/modules")
 def get_modules():
-    return jsonify(load_data())
+    return jsonify(prepare_response_data(load_data()))
 
 
 @app.route("/api/modules/<module_id>")
 def get_module(module_id):
-    modules = load_data()
-    for module in modules:
+    modules = prepare_response_data(load_data())
+    for module in (modules if isinstance(modules, list) else modules.get("modules", [])):
         if module.get("id") == module_id:
             return jsonify(module)
     return jsonify({"error": "Module introuvable"}), 404
@@ -154,7 +244,7 @@ def get_module(module_id):
 @app.route("/api/modules/<module_id>/device-config")
 def api_module_device_config(module_id):
     """Retourne une configuration simplifiee pour un module EE05."""
-    data = load_data()
+    data = prepare_response_data(load_data())
 
     module = find_module(data, module_id)
     if module is None:
@@ -177,7 +267,7 @@ def api_module_device_config(module_id):
 @app.route("/api/modules/<module_id>/sync")
 def api_module_sync(module_id):
     """Retourne l'etat officiel compact d'un module pour synchronisation."""
-    data = load_data()
+    data = prepare_response_data(load_data())
 
     module = find_module(data, module_id)
     if module is None:
@@ -204,7 +294,7 @@ def api_module_sync(module_id):
 @app.route("/api/modules/<module_id>/buttons/<int:button_number>/confirm-sync", methods=["POST"])
 def api_confirm_task_sync(module_id, button_number):
     """Confirme une tache et retourne une synchronisation compacte pour le module EE05."""
-    data = load_data()
+    data = prepare_response_data(load_data())
 
     module = find_module(data, module_id)
     if module is None:
@@ -231,6 +321,8 @@ def api_confirm_task_sync(module_id, button_number):
             "button": button_number
         }), 400
 
+    button["last_confirmed_at"] = get_today().isoformat()
+    days_remaining = calculate_days_remaining(button)
     button["days_remaining"] = button.get("cycle_days", 0)
     save_data(data)
     add_confirmation_log_entry("api_confirm_sync", module, button)
@@ -246,7 +338,8 @@ def api_confirm_task_sync(module_id, button_number):
             "button": button.get("button"),
             "task_name": button.get("task_name"),
             "cycle_days": button.get("cycle_days"),
-            "days_remaining": button.get("days_remaining")
+            "days_remaining": days_remaining,
+            "last_confirmed_at": button.get("last_confirmed_at")
         },
         "buttons": device_config["buttons"]
     })
@@ -255,7 +348,7 @@ def api_confirm_task_sync(module_id, button_number):
 @app.route("/modules/<module_id>/buttons/<int:button_number>/confirm", methods=["POST"])
 def confirm_task(module_id, button_number):
     """Confirme une tache depuis l'interface web."""
-    data = load_data()
+    data = prepare_response_data(load_data())
 
     module = find_module(data, module_id)
     if module is None:
@@ -265,6 +358,7 @@ def confirm_task(module_id, button_number):
     if button is None:
         return jsonify({"error": "Bouton introuvable"}), 404
 
+    button["last_confirmed_at"] = get_today().isoformat()
     button["days_remaining"] = button.get("cycle_days", 0)
     save_data(data)
     add_confirmation_log_entry("web", module, button)
@@ -274,7 +368,7 @@ def confirm_task(module_id, button_number):
 @app.route("/api/modules/<module_id>/buttons/<int:button_number>/confirm", methods=["POST"])
 def api_confirm_task(module_id, button_number):
     """Confirme une tache depuis une API JSON pour la future passerelle."""
-    data = load_data()
+    data = prepare_response_data(load_data())
 
     module = find_module(data, module_id)
     if module is None:
@@ -292,6 +386,8 @@ def api_confirm_task(module_id, button_number):
             "button": button_number
         }), 400
 
+    button["last_confirmed_at"] = get_today().isoformat()
+    days_remaining = calculate_days_remaining(button)
     button["days_remaining"] = button.get("cycle_days", 0)
     save_data(data)
     add_confirmation_log_entry("api", module, button)
@@ -303,7 +399,8 @@ def api_confirm_task(module_id, button_number):
         "button": button.get("button"),
         "task_name": button.get("task_name"),
         "cycle_days": button.get("cycle_days"),
-        "days_remaining": button.get("days_remaining"),
+        "days_remaining": days_remaining,
+        "last_confirmed_at": button.get("last_confirmed_at"),
         "enabled": button.get("enabled", True)
     })
 

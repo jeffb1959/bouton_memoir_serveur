@@ -1,4 +1,4 @@
-# Phase 2.0.0 - Boutons Memoire Serveur
+﻿# Phase 2.9.0 - Boutons Memoire Serveur
 
 ## Objectif
 
@@ -172,3 +172,24 @@ Contraintes valides pour cette phase :
 - Aucun export CSV.
 - Aucune pagination.
 - Aucune communication ESP-NOW pour l'instant.
+
+## Phase 2.9.0
+
+- Ajout de last_confirmed_at comme date officielle de dernière confirmation.
+- days_remaining est maintenant calculé dynamiquement à partir de cycle_days et last_confirmed_at.
+- Les valeurs négatives de days_remaining sont supportées pour les tâches dépassées.
+- GET /api/modules reste compatible avec la passerelle en continuant de retourner days_remaining.
+- confirm-sync, la confirmation web et l'API de confirmation mettent maintenant last_confirmed_at à aujourd'hui.
+- Migration douce des anciennes données : si last_confirmed_at manque, il est estimé depuis cycle_days et days_remaining.
+- L'édition d'une tâche ne confirme pas la tâche.
+
+Tests validés:
+
+- Flask démarre correctement.
+- La page web s'ouvre.
+- GET /api/modules retourne days_remaining.
+- Une ancienne date de confirmation donne un days_remaining négatif.
+- confirm-sync remet la tâche au vert en mettant last_confirmed_at à aujourd'hui.
+- La passerelle reste compatible sans modification.
+
+

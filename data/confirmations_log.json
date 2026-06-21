@@ -109,6 +109,337 @@
       "task_name": "Verres de contact",
       "cycle_days": 14,
       "days_remaining": 14
+    },
+    {
+      "timestamp": "2026-06-20T19:39:01",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 14,
+      "days_remaining": 14
+    },
+    {
+      "timestamp": "2026-06-20T19:39:24",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 3,
+      "task_name": "Changer monture des lunettes",
+      "cycle_days": 21,
+      "days_remaining": 21
+    },
+    {
+      "timestamp": "2026-06-20T19:55:46",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 14,
+      "days_remaining": 14
+    },
+    {
+      "timestamp": "2026-06-20T19:56:04",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 3,
+      "task_name": "Changer monture des lunettes",
+      "cycle_days": 21,
+      "days_remaining": 21
+    },
+    {
+      "timestamp": "2026-06-20T20:11:07",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 14,
+      "days_remaining": 14
+    },
+    {
+      "timestamp": "2026-06-20T20:11:21",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 3,
+      "task_name": "Changer monture des lunettes",
+      "cycle_days": 21,
+      "days_remaining": 21
+    },
+    {
+      "timestamp": "2026-06-20T20:19:16",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 14,
+      "days_remaining": 14
+    },
+    {
+      "timestamp": "2026-06-20T20:19:42",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 3,
+      "task_name": "Changer monture des lunettes",
+      "cycle_days": 21,
+      "days_remaining": 21
+    },
+    {
+      "timestamp": "2026-06-20T20:22:50",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 14,
+      "days_remaining": 14
+    },
+    {
+      "timestamp": "2026-06-20T20:23:01",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 3,
+      "task_name": "Changer monture des lunettes",
+      "cycle_days": 21,
+      "days_remaining": 21
+    },
+    {
+      "timestamp": "2026-06-20T20:23:32",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 14,
+      "days_remaining": 14
+    },
+    {
+      "timestamp": "2026-06-20T20:23:49",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 3,
+      "task_name": "Changer monture des lunettes",
+      "cycle_days": 21,
+      "days_remaining": 21
+    },
+    {
+      "timestamp": "2026-06-20T20:24:29",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 14,
+      "days_remaining": 14
+    },
+    {
+      "timestamp": "2026-06-20T20:24:36",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 3,
+      "task_name": "Changer monture des lunettes",
+      "cycle_days": 21,
+      "days_remaining": 21
+    },
+    {
+      "timestamp": "2026-06-20T20:29:56",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 14,
+      "days_remaining": 14
+    },
+    {
+      "timestamp": "2026-06-20T20:30:10",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 3,
+      "task_name": "Changer monture des lunettes",
+      "cycle_days": 21,
+      "days_remaining": 21
+    },
+    {
+      "timestamp": "2026-06-20T21:31:15",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 14,
+      "days_remaining": 14
+    },
+    {
+      "timestamp": "2026-06-20T21:31:34",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 3,
+      "task_name": "Changer monture des lunettes",
+      "cycle_days": 21,
+      "days_remaining": 21
+    },
+    {
+      "timestamp": "2026-06-20T21:46:07",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 14,
+      "days_remaining": 14
+    },
+    {
+      "timestamp": "2026-06-20T21:46:44",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 3,
+      "task_name": "Changer monture des lunettes",
+      "cycle_days": 21,
+      "days_remaining": 21
+    },
+    {
+      "timestamp": "2026-06-20T21:50:39",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 3,
+      "task_name": "Changer monture des lunettes",
+      "cycle_days": 21,
+      "days_remaining": 21
+    },
+    {
+      "timestamp": "2026-06-20T22:00:58",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 14,
+      "days_remaining": 14
+    },
+    {
+      "timestamp": "2026-06-20T22:22:24",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 14,
+      "days_remaining": 14
+    },
+    {
+      "timestamp": "2026-06-20T22:27:15",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 14,
+      "days_remaining": 14
+    },
+    {
+      "timestamp": "2026-06-20T22:37:24",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 14,
+      "days_remaining": 14
+    },
+    {
+      "timestamp": "2026-06-21T06:57:10",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 14,
+      "days_remaining": 14
+    },
+    {
+      "timestamp": "2026-06-21T07:16:57",
+      "source": "web",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 20,
+      "days_remaining": 20
+    },
+    {
+      "timestamp": "2026-06-21T07:29:29",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 20,
+      "days_remaining": 20
+    },
+    {
+      "timestamp": "2026-06-21T07:30:26",
+      "source": "web",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 2,
+      "task_name": "filtre du cpap",
+      "cycle_days": 90,
+      "days_remaining": 90
+    },
+    {
+      "timestamp": "2026-06-21T07:30:51",
+      "source": "web",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 2,
+      "task_name": "filtre À cpap",
+      "cycle_days": 40,
+      "days_remaining": 40
+    },
+    {
+      "timestamp": "2026-06-21T09:21:25",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 15,
+      "days_remaining": 15
+    },
+    {
+      "timestamp": "2026-06-21T09:40:10",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 15,
+      "days_remaining": 15
+    },
+    {
+      "timestamp": "2026-06-21T18:36:23",
+      "source": "web",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 14,
+      "days_remaining": 14,
+      "last_confirmed_at": "2026-06-21"
     }
   ]
 }
