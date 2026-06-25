@@ -1,4 +1,4 @@
-﻿# Phase 2.9.0 - Boutons Memoire Serveur
+﻿# Phase 2.10.0 - Boutons Memoire Serveur
 
 ## Objectif
 
@@ -191,5 +191,6 @@ Tests validés:
 - Une ancienne date de confirmation donne un days_remaining négatif.
 - confirm-sync remet la tâche au vert en mettant last_confirmed_at à aujourd'hui.
 - La passerelle reste compatible sans modification.
+
 
 

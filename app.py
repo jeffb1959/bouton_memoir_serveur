@@ -191,6 +191,47 @@ def build_device_config_payload(module):
     }
 
 
+def build_button_sync_payload(button, fallback_index=None, today=None):
+    """Construit un payload complet de synchronisation pour un bouton."""
+    if today is None:
+        today = get_today()
+
+    cycle_days = button.get("cycle_days")
+    try:
+        cycle_days = int(cycle_days)
+    except (TypeError, ValueError):
+        cycle_days = 0
+
+    button_number = _button_number(button, fallback_index)
+    days_remaining = calculate_days_remaining(button, today=today)
+
+    return {
+        "button": button_number,
+        "task_name": button.get("task_name"),
+        "cycle_days": cycle_days,
+        "days_remaining": days_remaining,
+        "enabled": button.get("enabled", True),
+        "last_confirmed_at": button.get("last_confirmed_at")
+    }
+
+
+def build_module_sync_payload(module):
+    """Construit le payload complet de synchronisation pour un module."""
+    buttons = []
+
+    for idx, button in enumerate(module.get("buttons", []), start=1):
+        if not isinstance(button, dict):
+            continue
+
+        buttons.append(build_button_sync_payload(button, fallback_index=idx))
+
+    return {
+        "module_id": module.get("id"),
+        "module_name": module.get("name"),
+        "buttons": buttons
+    }
+
+
 def add_confirmation_log_entry(source, module, button):
     """Ajoute une entree au journal des confirmations."""
     log_data = load_confirmation_log()
@@ -279,13 +320,13 @@ def api_module_sync(module_id):
             "server_time": get_server_time_iso()
         }), 404
 
-    payload = build_device_config_payload(module)
+    payload = build_module_sync_payload(module)
 
     return jsonify({
         "status": "ok",
         "event": "sync",
-        "module_id": payload["module_id"],
-        "module_name": payload["module_name"],
+        "module_id": payload.get("module_id"),
+        "module_name": payload.get("module_name"),
         "server_time": get_server_time_iso(),
         "buttons": payload["buttons"]
     })
@@ -314,11 +355,13 @@ def api_confirm_task_sync(module_id, button_number):
         }), 404
 
     if not button.get("enabled", True):
+        button_state = build_button_sync_payload(button, fallback_index=button_number)
         return jsonify({
             "status": "error",
             "error": "Bouton desactive",
             "module_id": module_id,
-            "button": button_number
+            "button": button_number,
+            "button_state": button_state
         }), 400
 
     button["last_confirmed_at"] = get_today().isoformat()
