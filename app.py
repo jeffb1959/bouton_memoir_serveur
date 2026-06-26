@@ -473,11 +473,15 @@ def edit_task(module_id, button_number):
         if module.get("id") == module_id:
             for idx, button in enumerate(module.get("buttons", []), start=1):
                 if _button_number(button, idx) == button_number:
+                    current_days_remaining = calculate_days_remaining(button)
+
                     button["task_name"] = task_name
                     button["cycle_days"] = cycle_days
                     button["enabled"] = enabled
+                    today = get_today()
+                    days_elapsed = cycle_days - current_days_remaining
+                    button["last_confirmed_at"] = (today - timedelta(days=days_elapsed)).isoformat()
                     # Important :
-                    # Ne pas modifier days_remaining ici.
                     # Changer le delai ne confirme pas la tache.
                     save_data(data)
                     return redirect(url_for("index"))

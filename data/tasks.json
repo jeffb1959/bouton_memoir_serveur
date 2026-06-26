@@ -6,16 +6,16 @@
       {
         "button": 1,
         "task_name": "Verres de contact",
-        "cycle_days": 14,
-        "days_remaining": 14,
-        "last_confirmed_at": "2026-06-25",
+        "cycle_days": 20,
+        "days_remaining": 20,
+        "last_confirmed_at": "2026-06-26",
         "enabled": true
       },
       {
         "button": 2,
         "task_name": "filtre À cpap",
         "cycle_days": 35,
-        "days_remaining": 36,
+        "days_remaining": 35,
         "last_confirmed_at": "2026-06-26",
         "enabled": false
       },
@@ -24,7 +24,7 @@
         "task_name": "Changer monture des lunettes",
         "cycle_days": 21,
         "days_remaining": 21,
-        "last_confirmed_at": "2026-06-25",
+        "last_confirmed_at": "2026-06-26",
         "enabled": true
       }
     ]
@@ -37,7 +37,7 @@
         "button": 1,
         "task_name": "Sel adoucisseur",
         "cycle_days": 45,
-        "days_remaining": 31,
+        "days_remaining": 30,
         "last_confirmed_at": "2026-06-11",
         "enabled": false
       },
@@ -45,7 +45,7 @@
         "button": 2,
         "task_name": "Filtre fournaise",
         "cycle_days": 90,
-        "days_remaining": 40,
+        "days_remaining": 39,
         "last_confirmed_at": "2026-05-06",
         "enabled": true
       },
@@ -53,7 +53,7 @@
         "button": 3,
         "task_name": "Test pompe puisard",
         "cycle_days": 60,
-        "days_remaining": 56,
+        "days_remaining": 55,
         "last_confirmed_at": "2026-06-21",
         "enabled": true
       }
