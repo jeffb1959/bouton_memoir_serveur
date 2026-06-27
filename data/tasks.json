@@ -6,8 +6,8 @@
       {
         "button": 1,
         "task_name": "Verres de contact",
-        "cycle_days": 20,
-        "days_remaining": 20,
+        "cycle_days": 14,
+        "days_remaining": 14,
         "last_confirmed_at": "2026-06-26",
         "enabled": true
       },

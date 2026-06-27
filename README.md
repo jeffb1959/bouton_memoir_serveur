@@ -1,4 +1,4 @@
-﻿# Phase 2.10.0 - Boutons Memoire Serveur
+# Phase 2.11.0 - Boutons Memoire Serveur
 
 ## Objectif
 
@@ -29,6 +29,25 @@ pip install -r requirements.txt
 ```powershell
 python app.py
 ```
+
+## 4.1) Configuration du port avec variable d’environnement (version 2.11.0)
+
+Le serveur Flask conserve le port `5000` par défaut.
+
+La configuration peut être surchargée par :
+- `BOUTON_MEMOIR_HOST` (défaut: `0.0.0.0`)
+- `BOUTON_MEMOIR_PORT` (défaut: `5000`)
+
+Exemple PowerShell:
+
+```powershell
+$env:BOUTON_MEMOIR_PORT="5001"
+python app.py
+```
+
+Exemple URL locale:
+
+- http://192.168.2.13:5001
 
 ## 5) URLs de test
 

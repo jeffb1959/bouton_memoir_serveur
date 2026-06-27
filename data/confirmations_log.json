@@ -1166,6 +1166,72 @@
       "cycle_days": 20,
       "days_remaining": 20,
       "last_confirmed_at": "2026-06-26"
+    },
+    {
+      "timestamp": "2026-06-26T12:58:34",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 14,
+      "days_remaining": 14,
+      "last_confirmed_at": "2026-06-26"
+    },
+    {
+      "timestamp": "2026-06-26T12:59:17",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 14,
+      "days_remaining": 14,
+      "last_confirmed_at": "2026-06-26"
+    },
+    {
+      "timestamp": "2026-06-26T16:15:15",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 3,
+      "task_name": "Changer monture des lunettes",
+      "cycle_days": 21,
+      "days_remaining": 21,
+      "last_confirmed_at": "2026-06-26"
+    },
+    {
+      "timestamp": "2026-06-26T16:41:20",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 3,
+      "task_name": "Changer monture des lunettes",
+      "cycle_days": 21,
+      "days_remaining": 21,
+      "last_confirmed_at": "2026-06-26"
+    },
+    {
+      "timestamp": "2026-06-26T16:58:07",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 3,
+      "task_name": "Changer monture des lunettes",
+      "cycle_days": 21,
+      "days_remaining": 21,
+      "last_confirmed_at": "2026-06-26"
+    },
+    {
+      "timestamp": "2026-06-26T17:31:05",
+      "source": "api_confirm_sync",
+      "module_id": "salle_bain",
+      "module_name": "Salle de bain",
+      "button": 1,
+      "task_name": "Verres de contact",
+      "cycle_days": 14,
+      "days_remaining": 14,
+      "last_confirmed_at": "2026-06-26"
     }
   ]
 }

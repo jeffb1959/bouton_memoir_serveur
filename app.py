@@ -2,6 +2,7 @@ from flask import Flask, jsonify, render_template, redirect, url_for, request
 import json
 from datetime import datetime, timedelta
 from pathlib import Path
+import os
 
 app = Flask(__name__)
 
@@ -498,4 +499,7 @@ def api_confirmations_log():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="127.0.0.1", port=5000)
+    host = os.environ.get("BOUTON_MEMOIR_HOST", "0.0.0.0")
+    port = int(os.environ.get("BOUTON_MEMOIR_PORT", "5000"))
+    print(f"Serveur Boutons Memoire demarre sur {host}:{port}")
+    app.run(debug=True, host=host, port=port)
